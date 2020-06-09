@@ -10,11 +10,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.app.mg.aoe.upc.Activities.ControlBActivity;
+import com.app.mg.aoe.upc.Activities.ReadQRActvity;
+import com.app.mg.aoe.upc.Activities.RoomActivity;
 import com.app.mg.aoe.upc.Activities.WSAndControlActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton btnWSC;
+    Button btnWSC;
+    Button btncreateRoom;
     Button btnC;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,26 +26,22 @@ public class MainActivity extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        btnWSC = findViewById(R.id.btnWSC);
+        btnWSC = findViewById(R.id.btnBuscarSala);
+        btncreateRoom = findViewById(R.id.btnCrearSala);
         //btnC = findViewById(R.id.btnC);
 
         btnWSC.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DisplayMetrics metrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                int width = metrics.widthPixels; // ancho absoluto en pixels
-                int height = metrics.heightPixels;
-                if (height == 1920 || width == 720) {
-
-                    Intent intent = new Intent(v.getContext(), ControlBActivity.class);
+                    Intent intent = new Intent(v.getContext(), ReadQRActvity.class);
                     startActivity(intent);
-
-                }
-                else{
-                    Intent intent = new Intent(v.getContext(), WSAndControlActivity.class);
+            }
+        });
+        btncreateRoom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), RoomActivity.class);
                     startActivity(intent);
-                }
             }
         });
 

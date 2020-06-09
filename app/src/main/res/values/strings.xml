@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Aliens On Earth</string>
     <string name="pause">PAUSE</string>
+    <string name="NombreSala">Nombre de la sala</string>
 </resources>

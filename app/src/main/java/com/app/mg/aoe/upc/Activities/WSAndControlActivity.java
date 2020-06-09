@@ -198,7 +198,7 @@ public class WSAndControlActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume(); // TODO: Revisar esto
-        if (wsClient.isClosed()) wsClient.reconnect();
+        //if (wsClient.isClosed()) wsClient.reconnect();
     }
 
     @Override

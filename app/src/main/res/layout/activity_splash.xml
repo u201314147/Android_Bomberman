@@ -9,13 +9,13 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#030303">
+        >
     <ImageView
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/alienslogo"
+        android:src="@drawable/fondo_bomberman"
         android:id="@+id/ivSplash"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />

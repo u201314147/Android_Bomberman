@@ -193,7 +193,7 @@ public class ControlBActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                finish();;
+                finish();
             }
         });
         myBulid.setNegativeButton("No", new DialogInterface.OnClickListener() {
