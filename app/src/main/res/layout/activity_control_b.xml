@@ -102,12 +102,14 @@
         android:id="@+id/ib_a"
         android:layout_width="63dp"
         android:layout_height="61dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="56dp"
         android:background="@android:color/transparent"
         android:padding="8dp"
         android:scaleType="fitXY"
         android:src="@drawable/btn_x"
-        tools:layout_editor_absoluteX="538dp"
-        tools:layout_editor_absoluteY="101dp"
+        app:layout_constraintBottom_toTopOf="@+id/ib_y"
+        app:layout_constraintStart_toEndOf="@+id/ib_x"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
@@ -118,8 +120,12 @@
         android:padding="8dp"
         android:scaleType="fitXY"
         android:src="@drawable/btn_y"
-        tools:layout_editor_absoluteX="485dp"
-        tools:layout_editor_absoluteY="148dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ib_b"
+        app:layout_constraintHorizontal_bias="0.664"
+        app:layout_constraintStart_toEndOf="@+id/v_center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.419" />
 
     <ImageButton
         android:id="@+id/ib_y"
@@ -129,20 +135,21 @@
         android:padding="8dp"
         android:scaleType="fitXY"
         android:src="@drawable/btn_b"
-        tools:layout_editor_absoluteX="527dp"
-        tools:layout_editor_absoluteY="208dp"
+        app:layout_constraintStart_toEndOf="@+id/ib_x"
+        app:layout_constraintTop_toTopOf="@+id/v_right"
         tools:ignore="MissingConstraints" />
 
     <ImageButton
         android:id="@+id/ib_b"
         android:layout_width="66dp"
         android:layout_height="60dp"
+        android:layout_marginStart="4dp"
         android:background="@android:color/transparent"
         android:padding="8dp"
         android:scaleType="fitXY"
         android:src="@drawable/btn_a"
-        tools:layout_editor_absoluteX="579dp"
-        tools:layout_editor_absoluteY="160dp"
+        app:layout_constraintStart_toStartOf="@+id/v_right"
+        app:layout_constraintTop_toBottomOf="@+id/ib_a"
         tools:ignore="MissingConstraints" />
 
 </android.support.constraint.ConstraintLayout>
