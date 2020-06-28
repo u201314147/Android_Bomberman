@@ -2,4 +2,7 @@
     <string name="app_name">Aliens On Earth</string>
     <string name="pause">PAUSE</string>
     <string name="NombreSala">Nombre de la sala</string>
+    <string name="escribe_tu_ip">Escribe tu IP</string>
+    <string name="ingresa_mensaje">Ingresa mensaje</string>
+    <string name="send">Send</string>
 </resources>
