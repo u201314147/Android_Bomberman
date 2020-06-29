@@ -41,6 +41,7 @@ public class WSAndControlActivityClient extends AppCompatActivity {
     MediaPlayer mp;
 
     String ipKey = "";
+    String jugador = "";
     //RUNNER PARA ENVIO DE MENSAJES; POR AHORA SIEMPRE SE EJECUTA PERO NO ES NECESARIO
     class MyServer implements Runnable{
 
@@ -123,6 +124,7 @@ public class WSAndControlActivityClient extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
            ipKey  = extras.getString("ip");
+           jugador = extras.getString("jugador");
             //The key argument here must match that used in the other activity
             System.out.println(ipKey);
         }
@@ -147,13 +149,13 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
                // SendMessageBody("UP");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"UP");
+                b.execute(ipKey,"UP"+jugador);
 
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
               //  SendMessageBody("STOPUP");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPUP");
+                b.execute(ipKey,"STOPUP"+jugador);
             }
             return false;
         });
@@ -165,13 +167,13 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
                // SendMessageBody("LEFT");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"LEFT");
+                b.execute(ipKey,"LEFT"+jugador);
 
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
               //  SendMessageBody("STOPLEFT");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPLEFT");
+                b.execute(ipKey,"STOPLEFT"+jugador);
             }
             return false;
         });
@@ -182,12 +184,12 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
            //     SendMessageBody("DOWN");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"DOWN");
+                b.execute(ipKey,"DOWN"+jugador);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
               //  SendMessageBody("STOPDOWN");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPDOWN");
+                b.execute(ipKey,"STOPDOWN"+jugador);
             }
 
             return false;
@@ -199,12 +201,12 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
            //     SendMessageBody("RIGHT");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"RIGHT");
+                b.execute(ipKey,"RIGHT"+jugador);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
             //    SendMessageBody("STOPRIGHT");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPRIGHT");
+                b.execute(ipKey,"STOPRIGHT"+jugador);
 
             }
 
@@ -217,12 +219,12 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
             //    SendMessageBody("A");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"A");
+                b.execute(ipKey,"A"+jugador);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
              //   SendMessageBody("STOPA");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPA");
+                b.execute(ipKey,"STOPA"+jugador);
             }
             return false;
         });
@@ -234,12 +236,12 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
            //     SendMessageBody("B");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"B");
+                b.execute(ipKey,"B"+jugador);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
            //     SendMessageBody("STOPB");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPB");
+                b.execute(ipKey,"STOPB"+jugador);
             }
             return false;
         });
@@ -250,12 +252,12 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
             //    SendMessageBody("Y");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"Y");
+                b.execute(ipKey,"Y"+jugador);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
             //    SendMessageBody("STOPY");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPY");
+                b.execute(ipKey,"STOPY"+jugador);
             }
             return false;
         });
@@ -266,12 +268,12 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
            //     SendMessageBody("X");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"X");
+                b.execute(ipKey,"X"+jugador);
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
            //     SendMessageBody("STOPX");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"STOPX");
+                b.execute(ipKey,"STOPX"+jugador);
             }
 
             return false;
@@ -284,7 +286,7 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
            //     SendMessageBody("PAUSE");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"PAUSE");
+                b.execute(ipKey,"PAUSE"+jugador);
             }
 
             return false;
@@ -296,7 +298,7 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                 mp.start();
              //   SendMessageBody("START");
                 BackgroundTask b = new BackgroundTask();
-                b.execute(ipKey,"START");
+                b.execute(ipKey,"START"+jugador);
             }
             return false;
         });

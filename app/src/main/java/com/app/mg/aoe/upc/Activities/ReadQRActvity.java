@@ -138,9 +138,15 @@ public class ReadQRActvity extends AppCompatActivity  {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
         if (result != null)
                 if(result.getContents() != null){
-                    tvBarCode.setText("El codigo de barras dice:\n" + result.getContents());
+                //    e1.setText("El codigo de barras dice:\n" + result.getContents());
+                    String ip = result.getContents();
+                    String[] numbers = ip.split(":");
+                    String element = numbers[1];
+                    String ipfinal = element.substring(2, element.length());
+                    e1.setText(ipfinal);
+
                 }else {
-                    tvBarCode.setText("error");
+                    e1.setText("");
                 }
     }
 
