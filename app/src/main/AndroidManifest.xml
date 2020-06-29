@@ -30,6 +30,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.app.mg.aoe.upc.Activities.WSAndControlActivityClient"
+            android:screenOrientation="landscape"
+            tools:ignore="InnerclassSeparator" />
+        <activity
             android:name="com.app.mg.aoe.upc.Activities.WSAndControlActivity"
             android:screenOrientation="landscape"
             tools:ignore="InnerclassSeparator" />

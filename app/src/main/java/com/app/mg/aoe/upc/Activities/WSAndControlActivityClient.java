@@ -2,51 +2,46 @@ package com.app.mg.aoe.upc.Activities;
 
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.app.mg.connectionlibraryandroid.Implementations.ConnectMethods;
-import com.app.mg.connectionlibraryandroid.Implementations.MessageMethods;
 import com.app.mg.aoe.upc.Entities.MessageBody;
 import com.app.mg.aoe.upc.Helpers.InputHelper;
 import com.app.mg.aoe.upc.R;
 import com.app.mg.aoe.upc.WebSocket.WebsocketClient;
 import com.app.mg.aoe.upc.WebSocket.WebsocketServer;
+import com.app.mg.connectionlibraryandroid.Implementations.ConnectMethods;
+import com.app.mg.connectionlibraryandroid.Implementations.MessageMethods;
 
 import org.java_websocket.WebSocket;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.regex.Pattern;
 
-public class WSAndControlActivity extends AppCompatActivity {
+public class WSAndControlActivityClient extends AppCompatActivity {
 
-    String port = "8080";
-    String ipAddress;
 
     ImageButton btnUp, btnLeft, btnDown, btnRight, btnA, btnB, btnX, btnY, btnPause, btnStart;
     TextView txtRoom;
 
-    ConnectMethods connectMethods = new ConnectMethods();
-    MessageMethods<MessageBody, WebsocketClient, WebSocket> messageMethods = new MessageMethods<>();
-    WebsocketServer wsServer;
-    WebsocketClient wsClient;
-    InetSocketAddress inetSockAddress;
     Vibrator vibrator;
     MediaPlayer mp;
 
-
-
+    String ipKey = "";
+    //RUNNER PARA ENVIO DE MENSAJES; POR AHORA SIEMPRE SE EJECUTA PERO NO ES NECESARIO
     class MyServer implements Runnable{
 
         ServerSocket ss;
@@ -74,8 +69,8 @@ public class WSAndControlActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+
                             Toast.makeText(getApplicationContext(),"message recieve from client: " + message, Toast.LENGTH_SHORT).show();
-                            SendMessageBody(message);
                         }
                     });
                 }
@@ -86,19 +81,52 @@ public class WSAndControlActivity extends AppCompatActivity {
         }
     }
 
+    public class BackgroundTask extends AsyncTask<String,Void,String> {
+        Socket s;
+        DataOutputStream dos;
+        String ip,message;
+
+        @Override
+        protected String doInBackground(String... params) {
+            ip = params[0];
+            message = params[1];
+
+            try {
+                s= new Socket(ip,9700);
+                dos = new DataOutputStream(s.getOutputStream());
+                dos.writeUTF(message);
+
+                dos.close();
+                s.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wsand_control);
 
+        //correr websocket cliente
+        Thread myThread = new Thread(new WSAndControlActivityClient.MyServer());
+        myThread.start();
+        //correr websocket cliente
 
-        //server
-          Thread myThread = new Thread(new MyServer());
-          myThread.start();
-          //server
 
-        ipAddress = connectMethods.FindMyIpAddress(this);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+           ipKey  = extras.getString("ip");
+            //The key argument here must match that used in the other activity
+            System.out.println(ipKey);
+        }
+
         mp = MediaPlayer.create(this, R.raw.button_press);
         btnUp = findViewById(R.id.ib_up);
         btnLeft = findViewById(R.id.ib_left);
@@ -117,10 +145,15 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("UP");
+               // SendMessageBody("UP");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"UP");
+
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPUP");
+              //  SendMessageBody("STOPUP");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPUP");
             }
             return false;
         });
@@ -130,10 +163,15 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("LEFT");
+               // SendMessageBody("LEFT");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"LEFT");
+
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPLEFT");
+              //  SendMessageBody("STOPLEFT");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPLEFT");
             }
             return false;
         });
@@ -142,11 +180,16 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("DOWN");
+           //     SendMessageBody("DOWN");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"DOWN");
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPDOWN");
+              //  SendMessageBody("STOPDOWN");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPDOWN");
             }
+
             return false;
         });
         btnRight.setOnTouchListener((v, event) -> {
@@ -154,10 +197,15 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("RIGHT");
+           //     SendMessageBody("RIGHT");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"RIGHT");
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPRIGHT");
+            //    SendMessageBody("STOPRIGHT");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPRIGHT");
+
             }
 
             return false;
@@ -167,10 +215,14 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("A");
+            //    SendMessageBody("A");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"A");
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPA");
+             //   SendMessageBody("STOPA");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPA");
             }
             return false;
         });
@@ -180,10 +232,14 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("B");
+           //     SendMessageBody("B");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"B");
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPB");
+           //     SendMessageBody("STOPB");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPB");
             }
             return false;
         });
@@ -192,10 +248,14 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("Y");
+            //    SendMessageBody("Y");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"Y");
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPY");
+            //    SendMessageBody("STOPY");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPY");
             }
             return false;
         });
@@ -204,10 +264,14 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("X");
+           //     SendMessageBody("X");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"X");
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
                 InputHelper.Vibrate(vibrator);
-                SendMessageBody("STOPX");
+           //     SendMessageBody("STOPX");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"STOPX");
             }
 
             return false;
@@ -218,7 +282,9 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("PAUSE");
+           //     SendMessageBody("PAUSE");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"PAUSE");
             }
 
             return false;
@@ -228,20 +294,14 @@ public class WSAndControlActivity extends AppCompatActivity {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 InputHelper.Vibrate(vibrator);
                 mp.start();
-                SendMessageBody("START");
+             //   SendMessageBody("START");
+                BackgroundTask b = new BackgroundTask();
+                b.execute(ipKey,"START");
             }
             return false;
         });
 
-        SetWServerAndStart();
 
-        if (wsServer != null) {
-            String[] octs = ipAddress.split(Pattern.quote("."));
-
-            txtRoom.setText("SALA " + octs[3]);
-        }
-        Handler handler = new Handler();
-        handler.postDelayed(this::connectWebSocket, 2000);
 
     }
 
@@ -251,77 +311,7 @@ public class WSAndControlActivity extends AppCompatActivity {
         //if (wsClient.isClosed()) wsClient.reconnect();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (wsClient != null) wsClient.close();
-        if (wsServer != null) {
-            try {
-                SetWServerClose();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
 
 
-    private void sendMessageStop() {
-        SendMessageBody("STOPRIGHT");
-    }
 
-    private void connectWebSocket() {
-
-
-        wsClient = new WebsocketClient(connectMethods.GetUriServer(ipAddress, port));
-        wsClient.connect();
-        Toast.makeText(getApplicationContext(), "Server Abierto", Toast.LENGTH_SHORT).show();
-    }
-
-    private void SendMessageBody(String message) {
-        if (wsClient == null || wsServer == null || !wsClient.isOpen()) return;
-        MessageBody messageBody = new MessageBody()
-                .setMessage(message)
-                .setSender(ipAddress)
-                .setToTV(true);
-
-        messageMethods.SendMessageBody(messageBody, wsClient, ipAddress);
-    }
-
-    private void SetWServerAndStart() {
-        inetSockAddress = connectMethods.GetISocketAddres(this, port);
-        wsServer = new WebsocketServer(inetSockAddress);
-        wsServer.setReuseAddr(true);
-        wsServer.start();
-
-    }
-
-    private void SetWServerClose() throws IOException, InterruptedException {
-        wsServer.stop();
-
-    }
-
-    @Override
-    public void onBackPressed() {
-        AlertDialog.Builder myBulid = new AlertDialog.Builder(this);
-        myBulid.setMessage("Se finalizará la conección con el Smart TV");
-        myBulid.setTitle("Mensaje");
-        myBulid.setPositiveButton("Si", (dialog, which) -> {
-
-            try {
-                SetWServerClose();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            finish();
-            ;
-        });
-        myBulid.setNegativeButton("No", (dialog, which) -> dialog.cancel());
-        AlertDialog dialog = myBulid.create();
-        dialog.show();
-    }
 }

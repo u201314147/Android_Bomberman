@@ -41,8 +41,8 @@ public class ReadQRActvity extends AppCompatActivity  {
         e2= findViewById(R.id.editText2);
 
 
-        Thread myThread = new Thread(new MyServer());
-        myThread.start();
+      //  Thread myThread = new Thread(new MyServer());
+      // myThread.start();
 
     }
 
@@ -87,8 +87,13 @@ public class ReadQRActvity extends AppCompatActivity  {
 
     public void button_click(View v){
 
-        BackgroundTask b = new BackgroundTask();
-        b.execute(e1.getText().toString(),e2.getText().toString());
+      //  BackgroundTask b = new BackgroundTask();
+      //  b.execute(e1.getText().toString(),e2.getText().toString());
+
+        Intent i = new Intent(ReadQRActvity.this, WSAndControlActivityClient.class);
+        i.putExtra("ip",e1.getText().toString());
+        i.putExtra("jugador",e2.getText().toString());
+        startActivity(i);
     }
     public class BackgroundTask extends AsyncTask<String,Void,String>{
         Socket s;

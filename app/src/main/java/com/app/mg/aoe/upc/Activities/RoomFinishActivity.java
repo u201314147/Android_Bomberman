@@ -25,7 +25,7 @@ public class RoomFinishActivity extends AppCompatActivity {
                 int height = metrics.heightPixels;
                 if (height == 1920 || width == 720) {
 
-                    Intent intent = new Intent(v.getContext(), ControlBActivity.class);
+                    Intent intent = new Intent(v.getContext(), WSAndControlActivity.class);
                     startActivity(intent);
 
                 }
