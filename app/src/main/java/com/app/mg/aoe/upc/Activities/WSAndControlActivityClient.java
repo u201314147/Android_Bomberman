@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.app.mg.aoe.upc.Entities.MessageBody;
 import com.app.mg.aoe.upc.Helpers.InputHelper;
+import com.app.mg.aoe.upc.Helpers.Preferences;
 import com.app.mg.aoe.upc.R;
 import com.app.mg.aoe.upc.WebSocket.WebsocketClient;
 import com.app.mg.aoe.upc.WebSocket.WebsocketServer;
@@ -142,6 +143,10 @@ public class WSAndControlActivityClient extends AppCompatActivity {
         btnStart = findViewById(R.id.ib_play);
         txtRoom = findViewById(R.id.txt_room);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        //ENVIO NOMBRE
+        BackgroundTask b2 = new BackgroundTask();
+        b2.execute(ipKey,"NAME"+jugador+ "." +Preferences.getPrefs("name",WSAndControlActivityClient.this));
 
         btnUp.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {

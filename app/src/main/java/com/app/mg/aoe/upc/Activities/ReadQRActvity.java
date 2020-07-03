@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.mg.aoe.upc.Helpers.Preferences;
 import com.app.mg.aoe.upc.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -27,7 +28,7 @@ import java.net.Socket;
 public class ReadQRActvity extends AppCompatActivity  {
     Button btnqr;
     TextView tvBarCode;
-    EditText e1,e2;
+    EditText e1,e2,e3;
 
 
     @Override
@@ -39,7 +40,15 @@ public class ReadQRActvity extends AppCompatActivity  {
         btnqr.setOnClickListener(mOnClickListener);
         e1= findViewById(R.id.editText);
         e2= findViewById(R.id.editText2);
+        e3= findViewById(R.id.editText3);
 
+        String name = Preferences.getPrefs("name",ReadQRActvity.this);
+        String value = Preferences.getPrefs("ip",ReadQRActvity.this);
+        if(value!="")
+        e1.setText(value);
+
+        if(name!="")
+            e3.setText(name);
 
       //  Thread myThread = new Thread(new MyServer());
       // myThread.start();
@@ -89,6 +98,9 @@ public class ReadQRActvity extends AppCompatActivity  {
 
       //  BackgroundTask b = new BackgroundTask();
       //  b.execute(e1.getText().toString(),e2.getText().toString());
+
+        //GRABARNOMBRE
+        Preferences.setPrefs("name",e3.getText().toString(),ReadQRActvity.this);
 
         Intent i = new Intent(ReadQRActvity.this, WSAndControlActivityClient.class);
         i.putExtra("ip",e1.getText().toString());
@@ -144,9 +156,10 @@ public class ReadQRActvity extends AppCompatActivity  {
                     String element = numbers[1];
                     String ipfinal = element.substring(2, element.length());
                     e1.setText(ipfinal);
+                    Preferences.setPrefs("ip",ipfinal,ReadQRActvity.this);
 
                 }else {
-                    e1.setText("");
+                   // e1.setText("");
                 }
     }
 

@@ -3,6 +3,7 @@
     <string name="pause">PAUSE</string>
     <string name="NombreSala">Nombre de la sala</string>
     <string name="escribe_tu_ip">Escribe tu IP</string>
-    <string name="ingresa_mensaje">Ingresa jugador</string>
+    <string name="ingresa_mensaje">Ingresa Nro. jugador</string>
     <string name="send">Send</string>
+    <string name="ingresa_nombre">Ingresa Nombre</string>
 </resources>

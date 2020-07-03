@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.mg.aoe.upc.Helpers.Preferences;
 import com.app.mg.connectionlibraryandroid.Implementations.ConnectMethods;
 import com.app.mg.connectionlibraryandroid.Implementations.MessageMethods;
 import com.app.mg.aoe.upc.Entities.MessageBody;
@@ -44,7 +45,7 @@ public class WSAndControlActivity extends AppCompatActivity {
     InetSocketAddress inetSockAddress;
     Vibrator vibrator;
     MediaPlayer mp;
-
+    boolean firstAction = false;
 
 
     class MyServer implements Runnable{
@@ -282,12 +283,27 @@ public class WSAndControlActivity extends AppCompatActivity {
 
     private void SendMessageBody(String message) {
         if (wsClient == null || wsServer == null || !wsClient.isOpen()) return;
+
         MessageBody messageBody = new MessageBody()
                 .setMessage(message)
                 .setSender(ipAddress)
                 .setToTV(true);
 
         messageMethods.SendMessageBody(messageBody, wsClient, ipAddress);
+
+        if(firstAction==false)
+        {
+            MessageBody messageBody2 = new MessageBody()
+                    .setMessage("NAME1"+ "." +Preferences.getPrefs("name",WSAndControlActivity.this))
+                    .setSender(ipAddress)
+                    .setToTV(true);
+
+            messageMethods.SendMessageBody(messageBody2, wsClient, ipAddress);
+
+            firstAction = true;
+
+        }
+
     }
 
     private void SetWServerAndStart() {
