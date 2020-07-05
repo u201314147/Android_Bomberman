@@ -28,7 +28,7 @@ import java.net.Socket;
 public class ReadQRActvity extends AppCompatActivity  {
     Button btnqr;
     TextView tvBarCode;
-    EditText e1,e2,e3;
+    EditText e1,e3;
 
 
     @Override
@@ -39,7 +39,6 @@ public class ReadQRActvity extends AppCompatActivity  {
         tvBarCode = findViewById(R.id.tvScan);
         btnqr.setOnClickListener(mOnClickListener);
         e1= findViewById(R.id.editText);
-        e2= findViewById(R.id.editText2);
         e3= findViewById(R.id.editText3);
 
         String name = Preferences.getPrefs("name",ReadQRActvity.this);
@@ -104,7 +103,7 @@ public class ReadQRActvity extends AppCompatActivity  {
 
         Intent i = new Intent(ReadQRActvity.this, WSAndControlActivityClient.class);
         i.putExtra("ip",e1.getText().toString());
-        i.putExtra("jugador",e2.getText().toString());
+        i.putExtra("jugador","2");
         startActivity(i);
     }
     public class BackgroundTask extends AsyncTask<String,Void,String>{

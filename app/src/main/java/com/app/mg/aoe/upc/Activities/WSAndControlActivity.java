@@ -2,6 +2,7 @@ package com.app.mg.aoe.upc.Activities;
 
 import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +25,7 @@ import com.app.mg.aoe.upc.WebSocket.WebsocketServer;
 import org.java_websocket.WebSocket;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -45,7 +47,40 @@ public class WSAndControlActivity extends AppCompatActivity {
     InetSocketAddress inetSockAddress;
     Vibrator vibrator;
     MediaPlayer mp;
+
+    boolean slot2full =false;
+    boolean slot3full =false;
+    boolean slot4full =false;
+
     boolean firstAction = false;
+
+
+
+    public class BackgroundTask extends AsyncTask<String,Void,String> {
+        Socket s;
+        DataOutputStream dos;
+        String ip,message;
+
+        @Override
+        protected String doInBackground(String... params) {
+            ip = params[0];
+            message = params[1];
+
+            try {
+                s= new Socket(ip,9700);
+                dos = new DataOutputStream(s.getOutputStream());
+                dos.writeUTF(message);
+
+                dos.close();
+                s.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
 
 
     class MyServer implements Runnable{
@@ -71,11 +106,58 @@ public class WSAndControlActivity extends AppCompatActivity {
                 while(true){
                     mysocket = ss.accept();
                     dis = new DataInputStream(mysocket.getInputStream());
+
                     message = dis.readUTF();
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(getApplicationContext(),"message recieve from client: " + message, Toast.LENGTH_SHORT).show();
+                            System.out.println(message);
+
+
+                            //
+                            String ip = mysocket.getInetAddress().getHostAddress();
+
+                            //
+                            if(message.equals("END2")){
+                                slot2full=false;
+                            }
+
+                            if(message.equals("END3")){
+                                slot3full=false;
+                            }
+
+                            if(message.equals("END4")){
+                                slot4full=false;
+                            }
+
+
+                            if(message.equals("START2")){
+
+                                if(slot2full==false) {slot2full=true;}
+                                else {
+                                    BackgroundTask b2 = new BackgroundTask();
+
+                                    if(slot3full==false){
+                                        b2.execute(ip,"3");
+                                        slot3full = true;
+                                        System.out.println(ip);
+                                    }
+                                    else if(slot4full==false){
+                                        b2.execute(ip,"4");
+                                        slot4full = true;
+                                          System.out.println(ip);
+                                    }
+                                    else{
+                                        b2.execute(ip,"0");
+                                         System.out.println(ip);
+                                    }
+                                }
+                            }
+
+
+                            System.out.println("J2-J3-J4");
+                            System.out.println(slot2full +"-"+ slot3full + "-"+ slot4full);
                             SendMessageBody(message);
                         }
                     });

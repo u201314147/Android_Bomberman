@@ -43,10 +43,11 @@ public class WSAndControlActivityClient extends AppCompatActivity {
 
     String ipKey = "";
     String jugador = "";
+    ServerSocket ss;
     //RUNNER PARA ENVIO DE MENSAJES; POR AHORA SIEMPRE SE EJECUTA PERO NO ES NECESARIO
     class MyServer implements Runnable{
 
-        ServerSocket ss;
+
         Socket mysocket;
         DataInputStream dis;
         String message;
@@ -73,6 +74,39 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                         public void run() {
 
                             Toast.makeText(getApplicationContext(),"message recieve from client: " + message, Toast.LENGTH_SHORT).show();
+
+                            System.out.println(message);
+
+                            if(message.equals("2")){
+                                  jugador = "2";
+                                String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
+                                txtRoom.setText("J" + jugador + ": "+ nombre);
+
+
+                            }
+
+                            else if(message.equals("3")){
+                                jugador = "3";
+                                String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
+                                txtRoom.setText("J" + jugador + ": "+ nombre);
+
+                            }
+                            else if(message.equals("4")){
+                                jugador = "4";
+                                String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
+                                txtRoom.setText("J" + jugador + ": "+ nombre);
+
+                            }
+                            else if(message.equals("0")){
+                                jugador = "0";
+                                String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
+                                txtRoom.setText("J" + jugador + ": "+ nombre);
+
+
+                                Toast.makeText(getApplicationContext(),"La sala esta llena",  Toast.LENGTH_SHORT).show();
+                                txtRoom.setText("SALA LLENA");
+                            }
+
                         }
                     });
                 }
@@ -144,9 +178,16 @@ public class WSAndControlActivityClient extends AppCompatActivity {
         txtRoom = findViewById(R.id.txt_room);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
+        String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
+
+        txtRoom.setText("J" + jugador + ": "+ nombre);
         //ENVIO NOMBRE
         BackgroundTask b2 = new BackgroundTask();
-        b2.execute(ipKey,"NAME"+jugador+ "." +Preferences.getPrefs("name",WSAndControlActivityClient.this));
+        b2.execute(ipKey,"NAME"+jugador+ "." +nombre);
+
+        //ENVIO GUARDAR SLOT
+        BackgroundTask b3 = new BackgroundTask();
+        b3.execute(ipKey,"START2");
 
         btnUp.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -318,7 +359,49 @@ public class WSAndControlActivityClient extends AppCompatActivity {
         //if (wsClient.isClosed()) wsClient.reconnect();
     }
 
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder myBulid = new AlertDialog.Builder(this);
+        myBulid.setMessage("Se finalizará la conección con el servidor");
+        myBulid.setTitle("Mensaje");
+        myBulid.setPositiveButton("Si", (dialog, which) -> {
+
+            BackgroundTask b = new BackgroundTask();
+            b.execute(ipKey,"END"+jugador);
+
+            finish();
+
+            if (ss != null && !ss.isClosed()) {
+                try {
+                    ss.close();
+                } catch (IOException e)
+                {
+                    e.printStackTrace(System.err);
+                }
+            }
+
+        });
+        myBulid.setNegativeButton("No", (dialog, which) -> dialog.cancel());
+        AlertDialog dialog = myBulid.create();
+        dialog.show();
+    }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BackgroundTask b = new BackgroundTask();
+        b.execute(ipKey,"END"+jugador);
+
+        if (ss != null && !ss.isClosed()) {
+            try {
+                ss.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace(System.err);
+            }
+        }
+
+    }
 
 }
