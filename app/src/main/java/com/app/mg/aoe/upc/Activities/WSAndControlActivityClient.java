@@ -81,7 +81,9 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                                   jugador = "2";
                                 String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
                                 txtRoom.setText("J" + jugador + ": "+ nombre);
-
+                                //ENVIO NOMBRE
+                                BackgroundTask b2 = new BackgroundTask();
+                                b2.execute(ipKey,"NAME"+jugador+ "." +nombre);
 
                             }
 
@@ -89,18 +91,27 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                                 jugador = "3";
                                 String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
                                 txtRoom.setText("J" + jugador + ": "+ nombre);
+                                //ENVIO NOMBRE
+                                BackgroundTask b2 = new BackgroundTask();
+                                b2.execute(ipKey,"NAME"+jugador+ "." +nombre);
 
                             }
                             else if(message.equals("4")){
                                 jugador = "4";
                                 String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
                                 txtRoom.setText("J" + jugador + ": "+ nombre);
+                                //ENVIO NOMBRE
+                                BackgroundTask b2 = new BackgroundTask();
+                                b2.execute(ipKey,"NAME"+jugador+ "." +nombre);
 
                             }
                             else if(message.equals("0")){
                                 jugador = "0";
                                 String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
                                 txtRoom.setText("J" + jugador + ": "+ nombre);
+                                //ENVIO NOMBRE
+                                BackgroundTask b2 = new BackgroundTask();
+                                b2.execute(ipKey,"NAME"+jugador+ "." +nombre);
 
 
                                 Toast.makeText(getApplicationContext(),"La sala esta llena",  Toast.LENGTH_SHORT).show();
@@ -181,9 +192,6 @@ public class WSAndControlActivityClient extends AppCompatActivity {
         String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
 
         txtRoom.setText("J" + jugador + ": "+ nombre);
-        //ENVIO NOMBRE
-        BackgroundTask b2 = new BackgroundTask();
-        b2.execute(ipKey,"NAME"+jugador+ "." +nombre);
 
         //ENVIO GUARDAR SLOT
         BackgroundTask b3 = new BackgroundTask();
@@ -368,6 +376,9 @@ public class WSAndControlActivityClient extends AppCompatActivity {
 
             BackgroundTask b = new BackgroundTask();
             b.execute(ipKey,"END"+jugador);
+
+            BackgroundTask b2 = new BackgroundTask();
+            b2.execute(ipKey,"NAME"+jugador+ "." + " ");
 
             finish();
 

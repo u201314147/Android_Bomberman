@@ -48,6 +48,8 @@ public class WSAndControlActivity extends AppCompatActivity {
     Vibrator vibrator;
     MediaPlayer mp;
 
+    ServerSocket ss;
+
     boolean slot2full =false;
     boolean slot3full =false;
     boolean slot4full =false;
@@ -85,7 +87,7 @@ public class WSAndControlActivity extends AppCompatActivity {
 
     class MyServer implements Runnable{
 
-        ServerSocket ss;
+
         Socket mysocket;
         DataInputStream dis;
         String message;
@@ -134,7 +136,10 @@ public class WSAndControlActivity extends AppCompatActivity {
 
                             if(message.equals("START2")){
 
-                                if(slot2full==false) {slot2full=true;}
+                                if(slot2full==false) {
+                                    BackgroundTask b2 = new BackgroundTask();
+                                    b2.execute(ip,"2");
+                                    slot2full=true;}
                                 else {
                                     BackgroundTask b2 = new BackgroundTask();
 
@@ -348,6 +353,16 @@ public class WSAndControlActivity extends AppCompatActivity {
             }
         }
 
+
+        if (ss != null && !ss.isClosed()) {
+            try {
+                ss.close();
+            } catch (IOException e)
+            {
+                e.printStackTrace(System.err);
+            }
+        }
+
     }
 
 
@@ -415,6 +430,17 @@ public class WSAndControlActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+
+            if (ss != null && !ss.isClosed()) {
+                try {
+                    ss.close();
+                } catch (IOException e)
+                {
+                    e.printStackTrace(System.err);
+                }
+            }
+
             finish();
             ;
         });
