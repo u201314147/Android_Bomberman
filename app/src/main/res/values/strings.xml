@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Aliens On Earth</string>
+    <string name="app_name">ExplosionMan</string>
     <string name="pause">PAUSE</string>
     <string name="NombreSala">Nombre de la sala</string>
     <string name="escribe_tu_ip">Escribe tu IP</string>
     <string name="ingresa_mensaje">Ingresa Nro. jugador</string>
     <string name="send">Send</string>
     <string name="ingresa_nombre">Ingresa Nombre</string>
+    <string name="ingresar">ingresar</string>
 </resources>

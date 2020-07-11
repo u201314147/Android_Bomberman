@@ -56,7 +56,7 @@
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivMainlogo"
-        app:srcCompat="@android:color/holo_green_dark" />
+        app:srcCompat="@color/zxing_viewfinder_mask" />
 
     <TextView
         android:id="@+id/tvExplosionMan"
