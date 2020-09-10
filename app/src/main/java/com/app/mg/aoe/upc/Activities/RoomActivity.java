@@ -46,7 +46,7 @@ public class RoomActivity extends AppCompatActivity {
 
                 //GRABARNOMBRE
 
-                Intent intent = new Intent(v.getContext(), RoomFinishActivity.class);
+                Intent intent = new Intent(v.getContext(), WSAndControlActivity.class);
                 startActivity(intent);
             }
         });

@@ -324,9 +324,9 @@ public class WSAndControlActivity extends AppCompatActivity {
         SetWServerAndStart();
 
         if (wsServer != null) {
-            String[] octs = ipAddress.split(Pattern.quote("."));
-
-            txtRoom.setText("SALA " + octs[3]);
+         //   String[] octs = ipAddress.split(Pattern.quote("."));
+            String nombre = Preferences.getPrefs("name",WSAndControlActivity.this);
+            txtRoom.setText("SALA " + nombre + "    ");
         }
         Handler handler = new Handler();
         handler.postDelayed(this::connectWebSocket, 2000);
@@ -405,7 +405,7 @@ public class WSAndControlActivity extends AppCompatActivity {
 
     private void SetWServerAndStart() {
         inetSockAddress = connectMethods.GetISocketAddres(this, port);
-        wsServer = new WebsocketServer(inetSockAddress, WSAndControlActivity.this);
+        wsServer = new WebsocketServer(inetSockAddress);
         wsServer.setReuseAddr(true);
         wsServer.start();
 
@@ -442,7 +442,7 @@ public class WSAndControlActivity extends AppCompatActivity {
             }
 
             finish();
-            ;
+
         });
         myBulid.setNegativeButton("No", (dialog, which) -> dialog.cancel());
         AlertDialog dialog = myBulid.create();

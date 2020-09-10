@@ -80,7 +80,7 @@ public class WSAndControlActivityClient extends AppCompatActivity {
                             if(message.equals("2")){
                                   jugador = "2";
                                 String nombre = Preferences.getPrefs("name",WSAndControlActivityClient.this);
-                                txtRoom.setText("J" + jugador + ": "+ nombre);
+                                txtRoom.setText("J" + jugador + ": "+ nombre + "    ");
                                 //ENVIO NOMBRE
                                 BackgroundTask b2 = new BackgroundTask();
                                 b2.execute(ipKey,"NAME"+jugador+ "." +nombre);

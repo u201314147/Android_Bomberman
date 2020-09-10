@@ -36,7 +36,7 @@ public class ReadQRActvity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_readqr);
         btnqr = findViewById(R.id.btnScan);
-        tvBarCode = findViewById(R.id.tvScan);
+        //tvBarCode = findViewById(R.id.tvScan);
         btnqr.setOnClickListener(mOnClickListener);
         e1= findViewById(R.id.editText);
         e3= findViewById(R.id.editText3);
