@@ -46,7 +46,7 @@
         android:id="@+id/btnCrearSala2"
         android:layout_width="158dp"
         android:layout_height="62dp"
-        android:layout_marginBottom="184dp"
+        android:layout_marginBottom="104dp"
         android:background="@drawable/style_principal_button"
         android:text="Crear"
         android:textColor="@color/zxing_status_text"

@@ -58,7 +58,7 @@
         android:id="@+id/btnCrearSala3"
         android:layout_width="185dp"
         android:layout_height="55dp"
-        android:layout_marginBottom="188dp"
+        android:layout_marginBottom="112dp"
         android:background="@drawable/style_principal_button"
         android:text="Ingresar"
         android:textColor="@color/zxing_status_text"
@@ -66,7 +66,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.517"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRoomName"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ProgressBar
         android:id="@+id/progressBar"

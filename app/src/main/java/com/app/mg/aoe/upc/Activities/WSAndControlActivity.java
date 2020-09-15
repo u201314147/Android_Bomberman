@@ -405,7 +405,7 @@ public class WSAndControlActivity extends AppCompatActivity {
 
     private void SetWServerAndStart() {
         inetSockAddress = connectMethods.GetISocketAddres(this, port);
-        wsServer = new WebsocketServer(inetSockAddress);
+        wsServer = new WebsocketServer(inetSockAddress, WSAndControlActivity.this);
         wsServer.setReuseAddr(true);
         wsServer.start();
 

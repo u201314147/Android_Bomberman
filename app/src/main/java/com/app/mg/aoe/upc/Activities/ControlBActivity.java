@@ -165,14 +165,14 @@ public class ControlBActivity extends AppCompatActivity {
 
     private void SetWServerAndStart() {
         inetSockAddress = connectMethods.GetISocketAddres(this, port);
-        WebsocketServer wsServer = new WebsocketServer(inetSockAddress);
+        WebsocketServer wsServer = new WebsocketServer(inetSockAddress, ControlBActivity.this);
         wsServer.start();
 
     }
 
     private void SetWServerClose() throws IOException, InterruptedException {
         inetSockAddress = connectMethods.GetISocketAddres(this, port);
-        WebsocketServer wsServer = new WebsocketServer(inetSockAddress);
+        WebsocketServer wsServer = new WebsocketServer(inetSockAddress, ControlBActivity.this);
         wsServer.stop();
 
     }
