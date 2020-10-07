@@ -28,12 +28,12 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="177dp"
+        android:layout_width="350dp"
         android:layout_height="196dp"
         android:adjustViewBounds="true"
         android:maxWidth="600dp"
         android:maxHeight="600dp"
-        android:scaleType="fitXY"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

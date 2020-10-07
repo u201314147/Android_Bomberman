@@ -55,7 +55,7 @@ public class WSAndControlActivity extends AppCompatActivity {
     boolean slot3full =false;
     boolean slot4full =false;
 
-    boolean firstAction = false;
+    int firstAction = 0;
 
 
 
@@ -389,7 +389,7 @@ public class WSAndControlActivity extends AppCompatActivity {
 
         messageMethods.SendMessageBody(messageBody, wsClient, ipAddress);
 
-        if(firstAction==false)
+        if(firstAction< 30)
         {
             MessageBody messageBody2 = new MessageBody()
                     .setMessage("NAME1"+ "." +Preferences.getPrefs("name",WSAndControlActivity.this))
@@ -398,7 +398,7 @@ public class WSAndControlActivity extends AppCompatActivity {
 
             messageMethods.SendMessageBody(messageBody2, wsClient, ipAddress);
 
-            firstAction = true;
+            firstAction = firstAction +1;
 
         }
 

@@ -56,7 +56,6 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:text="EXPLOSION MAN"
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="40sp"
@@ -69,8 +68,7 @@
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="24dp"
+        android:layout_height="350dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
