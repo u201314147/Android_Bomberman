@@ -5,7 +5,7 @@
     android:id="@+id/CrearSala"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@drawable/celufondo"
     tools:context=".MainActivity">
 
 
@@ -16,9 +16,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
-        android:text="Crea una sala para empezar"
         android:textAlignment="center"
-        android:textColor="#000"
+        android:textColor="#FFFFFF"
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +28,7 @@
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="350dp"
-        android:layout_height="196dp"
+        android:layout_height="350dp"
         android:adjustViewBounds="true"
         android:maxWidth="600dp"
         android:maxHeight="600dp"
@@ -39,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.301"
+        app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@drawable/second" />
 
     <Button
